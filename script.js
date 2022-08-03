@@ -1,15 +1,15 @@
 document.addEventListener("DOMContentLoaded", function () {
     document.getElementById('questionnaire__items').addEventListener('submit', function(event){
         event.preventDefault();
-        
 
-        
+
+
         const ansA = document.querySelector('[name="a"]'),
             ansB = document.querySelector('[name="b"]'),
             ansC = document.querySelector('[name="c"]'),
             ansD = document.querySelector('[name="d"]'),
             ansE = document.querySelector('[name="e"]');
-        
+
             const data = [
                 ansA.checked,
                 ansB.checked,
@@ -17,22 +17,22 @@ document.addEventListener("DOMContentLoaded", function () {
                 ansD.checked,
                 ansE.checked
             ];
-        
+
 
         let yes = 0;
         let no = 0;
         const all = 5;
-    
+
         data.forEach(element => {
             if(element === true){
                 yes++;
             }else{
-                no++
+                no++;
             }
-        });  
+        });
         drawDiagram(yes, no, all);
     })
-        
+
     function drawDiagram(yesAns, noAns, allAns) {
         let canvas = document.getElementById("myСanvas");
         let ctx = canvas.getContext('2d');
@@ -54,7 +54,9 @@ document.addEventListener("DOMContentLoaded", function () {
         ctx.closePath();
         ctx.fill();
 
+        let legend = document.getElementById('legend');
+        legend.classList.add('legend--active');
     }
 
-    
-})                                                                                                   
+
+})
