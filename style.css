@@ -6,11 +6,10 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: auto;
     background-color: darkgray;
     background-size: cover;
     border-radius: 20px;
-    font-family: Verdana, Geneva, Tahoma;
+    font-family: Verdana, Geneva, Tahoma, serif;
     font-size: large;
 }
 
@@ -53,7 +52,7 @@ h2 {
 }
 
 button {
-    font-family: Verdana, Geneva, Tahoma;
+    font-family: Verdana, Geneva, Tahoma, serif;
     font-size: large;
     background-color: aqua;
     border: none;
@@ -104,3 +103,4 @@ canvas {
 .legend__icon--black {
     background: black;
 }
+

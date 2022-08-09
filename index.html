@@ -8,84 +8,25 @@
 </head>
 
 <body>
-    <div class="questionnaire">
+    <div id=questionsHtml class="questionnaire">
         <h1>Опросник</h1>
         <form id="questionnaire__items">
-            <ul class="questions">
-                <li class="question">
-                    <h2>Вопрос #1</h2>
-                    <div class="answer">
-                        <input name="a" value="Yes" type="radio" /> Да
-                    </div>
-
-                    <div class="answer">
-                        <input name="a" value="No" type="radio" /> Нет
-                    </div>
-                </li>
-
-                <li class="question">
-                    <h2>Вопрос #2</h2>
-                    <div class="answer">
-                        <input name="b" value="Yes" type="radio" /> Да
-                    </div>
-
-                    <div class="answer">
-                        <input name="b" value="No" type="radio" /> Нет
-                    </div>
-                </li>
-
-                <li class="question">
-                    <h2>Вопрос #3</h2>
-                    <div class="answer">
-                        <input name="c" value="Yes" type="radio" /> Да
-                    </div>
-
-                    <div class="answer">
-                        <input name="c" value="No" type="radio" /> Нет
-                    </div>
-                </li>
-
-                <li class="question">
-                    <h2>Вопрос #4</h2>
-                        <div class="answer">
-                            <input name="d" value="Yes" type="radio" /> Да
-                        </div>
-
-                        <div class="answer">
-                            <input name="d" value="No" type="radio" /> Нет
-                        </div>
-                </li>
-
-                <li class="question">
-                    <h2>Вопрос #5</h2>
-                    <div class="answer">
-                        <input name="e" value="Yes" type="radio" /> Да
-                    </div>
-
-                    <div class="answer">
-                        <input name="e" value="No" type="radio" /> Нет
-                    </div>
-                </li>
-            </ul>
-
+            <div class="questions" id="questions-container"></div>
             <button id="questionnaire__btn">Показать результат</button>
         </form>
 
-    <canvas id="myСanvas"></canvas>
+        <canvas id="myСanvas"></canvas>
 
-    <div class=legend id="legend">
-        <div class="legend__item">
-            <div class="legend__icon legend__icon--white"></div>
-            <h3>Ответ "Да"</h3>
-        </div>
-
-        <div class="legend__item">
-            <div class="legend__icon legend__icon--black"></div>
-            <h3>Ответ "Нет"</h3>
+        <div class=legend id="legend">
+            <div class="legend__item">
+                <div class="legend__icon legend__icon--white"></div>
+                <h3>Ответ "Да"</h3>
+            </div>
+            <div class="legend__item">
+                <div class="legend__icon legend__icon--black"></div>
+                <h3>Ответ "Нет"</h3>
+            </div>
         </div>
     </div>
-</div>
-
-
 </body>
 </html>

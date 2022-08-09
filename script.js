@@ -1,8 +1,49 @@
 document.addEventListener("DOMContentLoaded", function () {
+
+    let questionsHtml = '';
+
+    const questions  = [
+        {name: 'Вопрос 1', answers: [
+            {name:"Да", radioName: "a", value: "Yes"},
+            {name:"Нет", radioName: "a", value: "No"}
+        ]},
+
+        {name: 'Вопрос 2', answers: [
+            {name:"Да", radioName: "b", value: "Yes"},
+            {name:"Нет", radioName: "b", value: "No"}
+        ]},
+
+        {name: 'Вопрос 3', answers: [
+            {name:"Да", radioName: "c", value: "Yes"},
+            {name:"Нет", radioName: "c", value: "No"}
+        ]},
+
+        {name: 'Вопрос 4', answers: [
+            {name:"Да", radioName: "d", value: "Yes"},
+            {name:"Нет", radioName: "d", value: "No"}
+        ]},
+
+        {name: 'Вопрос 5', answers: [
+            {name:"Да", radioName: "e", value: "Yes"},
+            {name:"Нет", radioName: "e", value: "No"}
+        ]}
+    ];
+
+    questions.forEach(block => {
+        questionsHtml += "<div class=\"question\"><h2>" + block.name + "</h2>";
+        block.answers.forEach(element => {
+            questionsHtml += '<div class="answer"> <input type="radio" value="' + element.value + '" name= "' + element.radioName + '" />'+ element.name + '</div>'
+        });
+        questionsHtml += '</div>';
+    });
+
+    let html = document.getElementById('questions-container')
+    html.insertAdjacentHTML('beforeend', questionsHtml)
+
+    console.log(questionsHtml);
+
     document.getElementById('questionnaire__items').addEventListener('submit', function(event){
         event.preventDefault();
-
-
 
         const ansA = document.querySelector('[name="a"]'),
             ansB = document.querySelector('[name="b"]'),
@@ -10,13 +51,13 @@ document.addEventListener("DOMContentLoaded", function () {
             ansD = document.querySelector('[name="d"]'),
             ansE = document.querySelector('[name="e"]');
 
-            const data = [
-                ansA.checked,
-                ansB.checked,
-                ansC.checked,
-                ansD.checked,
-                ansE.checked
-            ];
+        const data = [
+            ansA.checked,
+            ansB.checked,
+            ansC.checked,
+            ansD.checked,
+            ansE.checked
+        ];
 
 
         let yes = 0;
@@ -30,7 +71,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 no++;
             }
         });
+
         drawDiagram(yes, no, all);
+
     })
 
     function drawDiagram(yesAns, noAns, allAns) {
