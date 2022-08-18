@@ -3,30 +3,47 @@
 <head>
     <meta charset="UTF-8" />
     <title>Опросник</title>
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="style.css"/>
     <script src="script.js"></script>
 </head>
 
 <body>
     <div id=questionsHtml class="questionnaire">
         <h1>Опросник</h1>
-        <form id="questionnaire__items">
-            <div class="questions" id="questions-container"></div>
-            <button id="questionnaire__btn">Показать результат</button>
+
+        <form id="questionnaire__create">
+            <button id="questionnaire__create-btn">Создать вопрос</button>
+        </form>
+
+        <form class="questions" id="questionsContainer"></form>
+
+        <form class="questionnaire__submit" id="questionnaire__submit">
+
+            <div class="questionnaire__submit-item">
+                <h3>Ваш вопрос:</h3>
+                <input type="text" name="questionName" placeholder="Напишите вопрос..."/>
+            </div>
+
+            <div class="questionnaire__submit-item">
+                <h3>Варианты ответа:</h3>
+                <input type="text" name="answerNameA" placeholder="Напишите первый вариант ответа..."/>
+                <br><br>
+                <input type="text" name="answerNameB" placeholder="Напишите второй вариант ответа..."/>
+            </div>
+
+            <div class="questionnaire__submit-item-btn">
+                <button id="questionnaire__submit-btn">Отправить</button>
+                <button id="questionnaire__submit-btn-close">Закрыть форму</button>
+            </div>
+        </form>
+
+        <form id="questionnaire__btn-show">
+            <button id="questionnaire__btn-show">Показать результат</button>
         </form>
 
         <canvas id="myСanvas"></canvas>
 
-        <div class=legend id="legend">
-            <div class="legend__item">
-                <div class="legend__icon legend__icon--white"></div>
-                <h3>Ответ "Да"</h3>
-            </div>
-            <div class="legend__item">
-                <div class="legend__icon legend__icon--black"></div>
-                <h3>Ответ "Нет"</h3>
-            </div>
-        </div>
+        <div class=legend id="legend"></div>
     </div>
 </body>
 </html>

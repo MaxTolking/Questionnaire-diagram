@@ -1,105 +1,97 @@
+let questionsIds = [];
+
 document.addEventListener("DOMContentLoaded", function () {
 
-    let questionsHtml = '';
+    document.getElementById('questionnaire__create-btn').addEventListener('click', (e) => {
+        e.preventDefault();
 
-    const questions  = [
-        {name: 'Вопрос 1', answers: [
-            {name:"Да", radioName: "a", value: "Yes"},
-            {name:"Нет", radioName: "a", value: "No"}
-        ]},
-
-        {name: 'Вопрос 2', answers: [
-            {name:"Да", radioName: "b", value: "Yes"},
-            {name:"Нет", radioName: "b", value: "No"}
-        ]},
-
-        {name: 'Вопрос 3', answers: [
-            {name:"Да", radioName: "c", value: "Yes"},
-            {name:"Нет", radioName: "c", value: "No"}
-        ]},
-
-        {name: 'Вопрос 4', answers: [
-            {name:"Да", radioName: "d", value: "Yes"},
-            {name:"Нет", radioName: "d", value: "No"}
-        ]},
-
-        {name: 'Вопрос 5', answers: [
-            {name:"Да", radioName: "e", value: "Yes"},
-            {name:"Нет", radioName: "e", value: "No"}
-        ]}
-    ];
-
-    questions.forEach(block => {
-        questionsHtml += "<div class=\"question\"><h2>" + block.name + "</h2>";
-        block.answers.forEach(element => {
-            questionsHtml += '<div class="answer"> <input type="radio" value="' + element.value + '" name= "' + element.radioName + '" />'+ element.name + '</div>'
-        });
-        questionsHtml += '</div>';
+        const createForm = document.getElementById('questionnaire__submit');
+        createForm.classList.add('questionnaire__submit--active');
     });
 
-    let html = document.getElementById('questions-container')
-    html.insertAdjacentHTML('beforeend', questionsHtml)
+    document.getElementById('questionnaire__submit').addEventListener('submit', (e) => {
+        e.preventDefault();
 
-    console.log(questionsHtml);
+        const formData = new FormData(questionnaire__submit);
+        const questionName = formData.get('questionName');
+        const answers = [formData.get('answerNameA'), formData.get('answerNameB')];
 
-    document.getElementById('questionnaire__items').addEventListener('submit', function(event){
+        let questionId = questionsIds.length === 0 ? 1 : questionsIds[questionsIds.length - 1] + 1;
+        questionsIds.push(questionId);
+
+        let questionsHtml = '';
+        questionsHtml += "<div class=\"question\"><h2>" + questionName + "</h2>";
+        answers.forEach(element => {
+            questionsHtml += '<div class="answer"> <input type="radio" value="' + element + '" name= "answer_' + questionId + '" /> <h3> '+ element + ' </h3>';
+            questionsHtml += '</div>';
+        });
+        questionsHtml += '<div class="answer"> <input type="radio" value="other" name= "answer_' + questionId + '" /> <h3> Другое </h3>';
+        questionsHtml += '<input type="text" class="another-answer" placeholder="Введите своё решение..." name= "answer_' + questionId + '_text">'
+        questionsHtml += '</div>';
+        questionsHtml += '</div>';
+
+        let html = document.getElementById('questionsContainer')
+        html.insertAdjacentHTML('beforeend', questionsHtml)
+    });
+
+    document.getElementById('questionnaire__submit-btn-close').addEventListener('click', (c) => {
+        c.preventDefault();
+
+        const closeForm = document.getElementById('questionnaire__submit');
+        closeForm.classList.remove('questionnaire__submit--active');
+    });
+
+
+    document.getElementById('questionnaire__btn-show').addEventListener('submit', function(event){
         event.preventDefault();
 
-        const ansA = document.querySelector('[name="a"]'),
-            ansB = document.querySelector('[name="b"]'),
-            ansC = document.querySelector('[name="c"]'),
-            ansD = document.querySelector('[name="d"]'),
-            ansE = document.querySelector('[name="e"]');
-
-        const data = [
-            ansA.checked,
-            ansB.checked,
-            ansC.checked,
-            ansD.checked,
-            ansE.checked
-        ];
-
-
-        let yes = 0;
-        let no = 0;
-        const all = 5;
-
-        data.forEach(element => {
-            if(element === true){
-                yes++;
+        const formData = new FormData(questionsContainer);
+        let answersValues = [];
+        questionsIds.forEach(id => {
+            if(formData.get('answer_' + id) === 'other'){
+                answersValues.push(formData.get('answer_' + id + '_text'));
             }else{
-                no++;
+                answersValues.push(formData.get('answer_' + id));
             }
         });
 
-        drawDiagram(yes, no, all);
+        let allAns = answersValues.length;
+        let answersData = {};
+        answersValues.forEach(element => {
+            answersData[element] = 0;
+        });
 
+        answersValues.forEach(element => {
+            answersData[element]++;
+        });
+        drawDiagram(answersData, allAns);
     })
 
-    function drawDiagram(yesAns, noAns, allAns) {
+    function drawDiagram(answersCount, allAns) {
         let canvas = document.getElementById("myСanvas");
         let ctx = canvas.getContext('2d');
         canvas.height = 300;
         canvas.width = 300;
 
+        let legendHtml = '';
+        let drawnСontent = 0;
+        for (let key in answersCount) {
+            let color = '#'+(Math.random().toString(16)+'00000').slice(2,8);
+            ctx.fillStyle = color;
+            ctx.beginPath();
+            ctx.moveTo(150,150);
+            ctx.arc(150, 150, 150, drawnСontent, answersCount[key] / allAns * (2 * Math.PI) + drawnСontent);
+            ctx.closePath();
+            ctx.fill();
 
-        ctx.fillStyle = 'white';
-        ctx.beginPath();
-        ctx.moveTo(150,150);
-        ctx.arc(150, 150, 150, 0, yesAns / allAns * (2 * Math.PI));
-        ctx.closePath();
-        ctx.fill();
+            legendHtml += '<div class="legend__item"> <div class="legend__icon" style="background: ' + color + '"></div><h3>Ответ "' + key + '"</h3></div>';
 
-        ctx.fillStyle = 'black';
-        ctx.beginPath();
-        ctx.moveTo(150,150);
-        ctx.arc(150,150,150, yesAns / allAns * (2 * Math.PI), noAns / allAns * (2 * Math.PI) + yesAns / allAns * (2 * Math.PI));
-        ctx.closePath();
-        ctx.fill();
+            drawnСontent += answersCount[key] / allAns * (2 * Math.PI);
+        }
 
         let legend = document.getElementById('legend');
+        legend.insertAdjacentHTML('beforeend', legendHtml);
         legend.classList.add('legend--active');
     }
-
 
 })
